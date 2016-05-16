@@ -42,7 +42,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "BFFA3A7F21EA45F5ABE54BDA6D650CA4"
     },
     "cell_type" : "code",
@@ -58,7 +58,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "26D77CFE25644777808F43840E884C28"
     },
     "cell_type" : "code",
@@ -74,7 +74,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "presentation" : {
         "tabs_state" : "{\n  \"tab_id\": \"#tab539254998-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
@@ -100,7 +100,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "9B1540F72104406A9654B497FED17FC4"
     },
     "cell_type" : "code",
@@ -116,7 +116,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "8C4D8F2D5CFE4F3C87615D40569989B9"
     },
     "cell_type" : "code",
@@ -132,7 +132,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "E1DFB1A4258C40AF8B03112CA6557C58"
     },
     "cell_type" : "code",
@@ -142,7 +142,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "A2390B5567AF466C96028897BB4824A7"
     },
     "cell_type" : "code",
@@ -152,7 +152,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "17FD0D43D94346D6830F3B4A8BEC173A"
     },
     "cell_type" : "code",
@@ -162,7 +162,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "0EEE67CC3812418593709681704881DD"
     },
     "cell_type" : "code",
@@ -181,7 +181,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "298105795E8B41609F5F289A52438E54"
     },
     "cell_type" : "code",
@@ -191,7 +191,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
+      "collapsed" : true,
       "id" : "824AD31B26A844388CF96584A762971B"
     },
     "cell_type" : "code",
@@ -206,66 +206,6 @@
     },
     "cell_type" : "markdown",
     "source" : "Accuracy: 0.733648619800647. Not bad! But probably we can do better!"
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "F008A4AC514047ED8A396FABDF30C5BB"
-    },
-    "cell_type" : "code",
-    "source" : "def encodeEndingAllVowels(name: String) = if (\"aeiouhy\".contains(name.last)) 1 else 0",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "EABFE101D78645DCA87C032DF4E28781"
-    },
-    "cell_type" : "code",
-    "source" : "val featuresAndLabel = names.map {n => \n                                  val ending = encodeEndingAllVowels(n.name)\n                                  val nameLength = n.name.length\n                                  val label = encodeGender(n.sex)\n                                  (nameLength, ending, label)\n                                 }",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "66FDD2D4C51444998480B37A1F2F6B78"
-    },
-    "cell_type" : "code",
-    "source" : "val labeledPoints = featuresAndLabel.map { case (length: Int, endsWith: Int, isFemale: Int) =>\n  LabeledPoint(isFemale.toDouble, Vectors.dense(length, endsWith))\n}",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "78EB387E704942328888F35BB09A9E97"
-    },
-    "cell_type" : "code",
-    "source" : "val Array(train, test) = labeledPoints.randomSplit(Array(0.6, 0.4), seed = 11L)",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "E9E2783B140C4AEA9FB6B4300BAD597A"
-    },
-    "cell_type" : "code",
-    "source" : "val model = RandomForest.trainClassifier(train, numClasses = 2, categoricalFeaturesInfo = Map[Int, Int](),\n  numTrees = 100, featureSubsetStrategy = \"auto\", impurity = \"gini\", maxDepth = 30, maxBins = 300)",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "9292369C7FBB4A4B927E5310F5701D91"
-    },
-    "cell_type" : "code",
-    "source" : "val predictionAndLabel = test.map(p => (model.predict(p.features), p.label))\nval accuracy = 1.0 * predictionAndLabel.filter(x => x._1 == x._2).count / test.count",
-    "outputs" : [ ]
   } ],
   "nbformat" : 4
 }
