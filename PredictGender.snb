@@ -47,18 +47,7 @@
     },
     "cell_type" : "code",
     "source" : "case class NameRecord(name: String, sex: String, count: Int)",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "defined class NameRecord\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 12
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "id" : "A4C1088A3F7D486589EE1DB1A68F6F43"
@@ -73,19 +62,8 @@
       "id" : "26D77CFE25644777808F43840E884C28"
     },
     "cell_type" : "code",
-    "source" : "val home = sys.env(\"TRAINING_HOME\")\nval names = sparkContext.textFile(s\"$home/notebooks/predictGender/names/*\")\n  .map(_.split(\",\"))\n  .map(n => NameRecord(n(0).trim.toLowerCase, n(1).trim.toLowerCase, n(2).trim.toInt))",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "home: String = /home/dre/Documents/Fast_Track_to_Spark/exercises\nnames: org.apache.spark.rdd.RDD[NameRecord] = MapPartitionsRDD[13] at map at <console>:62\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 13
-    } ]
+    "source" : "val home = sys.env(\"TRAINING_HOME\")\nval names = sparkContext.textFile(s\"$home/notebooks/predict-gender-notebook/names/*\")\n  .map(_.split(\",\"))\n  .map(n => NameRecord(n(0).trim.toLowerCase, n(1).trim.toLowerCase, n(2).trim.toInt))",
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "id" : "3FE7EBFC4741415390538A736111863B"
@@ -105,18 +83,7 @@
     },
     "cell_type" : "code",
     "source" : "names.take(10).foreach(println)",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "NameRecord(mary,f,7065)\nNameRecord(anna,f,2604)\nNameRecord(emma,f,2003)\nNameRecord(elizabeth,f,1939)\nNameRecord(minnie,f,1746)\nNameRecord(margaret,f,1578)\nNameRecord(ida,f,1472)\nNameRecord(alice,f,1414)\nNameRecord(bertha,f,1320)\nNameRecord(sarah,f,1288)\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 14
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "id" : "A20C3CA86BAD43238EE86CE4618C9D27"
@@ -138,18 +105,7 @@
     },
     "cell_type" : "code",
     "source" : "def encodeGender(label: String) = if (label.equalsIgnoreCase(\"f\")) 1 else 0",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "encodeGender: (label: String)Int\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 15
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "id" : "C15584BB756B4CE985451858150AA812"
@@ -165,18 +121,7 @@
     },
     "cell_type" : "code",
     "source" : "def encodeEnding(name: String) = if (name.endsWith(\"a\") || name.endsWith(\"e\") || name.endsWith(\"h\")) 1 else 0",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "encodeEnding: (name: String)Int\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 16
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "id" : "23660C44AA954A72871181F9A10E7C3E"
@@ -192,18 +137,7 @@
     },
     "cell_type" : "code",
     "source" : "val featuresAndLabel = names.map {n => \n                                  val ending = encodeEnding(n.name)\n                                  val nameLength = n.name.length\n                                  val label = encodeGender(n.sex)\n                                  (nameLength, ending, label)\n                                 }",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "featuresAndLabel: org.apache.spark.rdd.RDD[(Int, Int, Int)] = MapPartitionsRDD[14] at map at <console>:64\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 17
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -213,18 +147,7 @@
     },
     "cell_type" : "code",
     "source" : "featuresAndLabel.take(10).foreach(println)",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "(4,0,1)\n(4,1,1)\n(4,1,1)\n(9,1,1)\n(6,1,1)\n(8,0,1)\n(3,1,1)\n(5,1,1)\n(6,1,1)\n(5,1,1)\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 18
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -234,18 +157,7 @@
     },
     "cell_type" : "code",
     "source" : "import org.apache.spark.mllib.regression.LabeledPoint\nimport org.apache.spark.mllib.linalg.Vectors\n\nval labeledPoints = featuresAndLabel.map { case (length: Int, endsWith: Int, isFemale: Int) =>\n  LabeledPoint(isFemale.toDouble, Vectors.dense(length, endsWith))\n}",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "import org.apache.spark.mllib.regression.LabeledPoint\nimport org.apache.spark.mllib.linalg.Vectors\nlabeledPoints: org.apache.spark.rdd.RDD[org.apache.spark.mllib.regression.LabeledPoint] = MapPartitionsRDD[15] at map at <console>:69\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 19
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -255,18 +167,7 @@
     },
     "cell_type" : "code",
     "source" : "val Array(train, test) = labeledPoints.randomSplit(Array(0.6, 0.4), seed = 11L)",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "train: org.apache.spark.rdd.RDD[org.apache.spark.mllib.regression.LabeledPoint] = MapPartitionsRDD[16] at randomSplit at <console>:73\ntest: org.apache.spark.rdd.RDD[org.apache.spark.mllib.regression.LabeledPoint] = MapPartitionsRDD[17] at randomSplit at <console>:73\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 20
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -285,18 +186,7 @@
     },
     "cell_type" : "code",
     "source" : "import org.apache.spark.mllib.tree.RandomForest\nimport org.apache.spark.mllib.tree.model.RandomForestModel\n\n// May take some time!\nval model = RandomForest.trainClassifier(train, numClasses = 2, categoricalFeaturesInfo = Map[Int, Int](),\n  numTrees = 100, featureSubsetStrategy = \"auto\", impurity = \"gini\", maxDepth = 30, maxBins = 300)",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "import org.apache.spark.mllib.tree.RandomForest\nimport org.apache.spark.mllib.tree.model.RandomForestModel\nmodel: org.apache.spark.mllib.tree.model.RandomForestModel =\nTreeEnsembleModel classifier with 100 trees\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 21
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -306,18 +196,7 @@
     },
     "cell_type" : "code",
     "source" : "val predictionAndLabel = test.map(p => (model.predict(p.features), p.label))\nval accuracy = 1.0 * predictionAndLabel.filter(x => x._1 == x._2).count / test.count",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "predictionAndLabel: org.apache.spark.rdd.RDD[(Double, Double)] = MapPartitionsRDD[56] at map at <console>:64\naccuracy: Double = 0.733648619800647\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 22
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -336,18 +215,7 @@
     },
     "cell_type" : "code",
     "source" : "def encodeEndingAllVowels(name: String) = if (\"aeiouhy\".contains(name.last)) 1 else 0",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "encodeEndingAllVowels: (name: String)Int\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 32
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -357,18 +225,7 @@
     },
     "cell_type" : "code",
     "source" : "val featuresAndLabel = names.map {n => \n                                  val ending = encodeEndingAllVowels(n.name)\n                                  val nameLength = n.name.length\n                                  val label = encodeGender(n.sex)\n                                  (nameLength, ending, label)\n                                 }",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "featuresAndLabel: org.apache.spark.rdd.RDD[(Int, Int, Int)] = MapPartitionsRDD[99] at map at <console>:68\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 33
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -378,18 +235,7 @@
     },
     "cell_type" : "code",
     "source" : "val labeledPoints = featuresAndLabel.map { case (length: Int, endsWith: Int, isFemale: Int) =>\n  LabeledPoint(isFemale.toDouble, Vectors.dense(length, endsWith))\n}",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "labeledPoints: org.apache.spark.rdd.RDD[org.apache.spark.mllib.regression.LabeledPoint] = MapPartitionsRDD[100] at map at <console>:70\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 34
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -399,18 +245,7 @@
     },
     "cell_type" : "code",
     "source" : "val Array(train, test) = labeledPoints.randomSplit(Array(0.6, 0.4), seed = 11L)",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "train: org.apache.spark.rdd.RDD[org.apache.spark.mllib.regression.LabeledPoint] = MapPartitionsRDD[101] at randomSplit at <console>:75\ntest: org.apache.spark.rdd.RDD[org.apache.spark.mllib.regression.LabeledPoint] = MapPartitionsRDD[102] at randomSplit at <console>:75\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 35
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -420,11 +255,7 @@
     },
     "cell_type" : "code",
     "source" : "val model = RandomForest.trainClassifier(train, numClasses = 2, categoricalFeaturesInfo = Map[Int, Int](),\n  numTrees = 100, featureSubsetStrategy = \"auto\", impurity = \"gini\", maxDepth = 30, maxBins = 300)",
-    "outputs" : [ {
-      "name" : "stderr",
-      "output_type" : "stream",
-      "text" : "The cell was cancelled.\n"
-    } ]
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -434,18 +265,7 @@
     },
     "cell_type" : "code",
     "source" : "val predictionAndLabel = test.map(p => (model.predict(p.features), p.label))\nval accuracy = 1.0 * predictionAndLabel.filter(x => x._1 == x._2).count / test.count",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "predictionAndLabel: org.apache.spark.rdd.RDD[(Double, Double)] = MapPartitionsRDD[97] at map at <console>:66\naccuracy: Double = 0.733648619800647\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 31
-    } ]
+    "outputs" : [ ]
   } ],
   "nbformat" : 4
 }
