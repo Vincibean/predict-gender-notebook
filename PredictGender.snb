@@ -42,7 +42,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "BFFA3A7F21EA45F5ABE54BDA6D650CA4"
     },
     "cell_type" : "code",
@@ -58,7 +58,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "26D77CFE25644777808F43840E884C28"
     },
     "cell_type" : "code",
@@ -74,7 +74,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "presentation" : {
         "tabs_state" : "{\n  \"tab_id\": \"#tab539254998-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
@@ -100,7 +100,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "9B1540F72104406A9654B497FED17FC4"
     },
     "cell_type" : "code",
@@ -116,7 +116,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "8C4D8F2D5CFE4F3C87615D40569989B9"
     },
     "cell_type" : "code",
@@ -127,12 +127,12 @@
       "id" : "23660C44AA954A72871181F9A10E7C3E"
     },
     "cell_type" : "markdown",
-    "source" : "### TODO"
+    "source" : "Let's now create an RDD containig our features and the corresponding label; this will be used by our supervised learning algorithm."
   }, {
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "E1DFB1A4258C40AF8B03112CA6557C58"
     },
     "cell_type" : "code",
@@ -142,17 +142,7 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
-      "id" : "A2390B5567AF466C96028897BB4824A7"
-    },
-    "cell_type" : "code",
-    "source" : "featuresAndLabel.take(10).foreach(println)",
-    "outputs" : [ ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "17FD0D43D94346D6830F3B4A8BEC173A"
     },
     "cell_type" : "code",
@@ -160,9 +150,15 @@
     "outputs" : [ ]
   }, {
     "metadata" : {
+      "id" : "AAE568FCCF8E4CD88E6036736794AF17"
+    },
+    "cell_type" : "markdown",
+    "source" : "Shuffle our data and split the corresponding RDD into a training set and a test set."
+  }, {
+    "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "0EEE67CC3812418593709681704881DD"
     },
     "cell_type" : "code",
@@ -176,12 +172,12 @@
       "id" : "BA279293FF1C49C9AAD706D4F23CFD8E"
     },
     "cell_type" : "markdown",
-    "source" : "numTrees = 100 because we are trying to use the same parameters as the other example."
+    "source" : "Let's train a first predictive algorithm; here, we are training a [Random Forest](https://en.wikipedia.org/wiki/Random_forest) algorithm, one of the most powerful predictive models that is commonly used in machine learning tasks."
   }, {
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "298105795E8B41609F5F289A52438E54"
     },
     "cell_type" : "code",
@@ -189,9 +185,15 @@
     "outputs" : [ ]
   }, {
     "metadata" : {
+      "id" : "72016B0A70FD4FBE8DE498ADF8167102"
+    },
+    "cell_type" : "markdown",
+    "source" : "Let's then calculate the accuracy of the model. Remember that the accuracy is computed with the following formula:   \n(Σ True positive + Σ True negative) / Σ Total population"
+  }, {
+    "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "824AD31B26A844388CF96584A762971B"
     },
     "cell_type" : "code",
@@ -205,7 +207,7 @@
       "id" : "083F1945F8A245EB897C46AB5688C1AF"
     },
     "cell_type" : "markdown",
-    "source" : "Accuracy: 0.733648619800647. Not bad! But probably we can do better!"
+    "source" : "Accuracy: 0.733648619800647. Not bad, considering that we are using only two features! But we can probably do better!"
   } ],
   "nbformat" : 4
 }
